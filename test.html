@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Effect</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .content {
+            height: 200vh; /* Pentru a avea suficient conținut de derulat */
+            background: linear-gradient(to bottom, #fff, #f0f0f0);
+        }
+
+        .sticky-image-container {
+            position: -webkit-sticky; /* Pentru suport Safari */
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .sticky-image-container img {
+            width: 100vw; /* Acoperă lățimea ecranului */
+            height: auto;
+            transform: translateY(0%);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        .fade-out {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="sticky-image-container">
+        <img src="https://i.imgur.com/BY2LjQ3.png" alt="Imagine de exemplu" class="sticky-image">
+    </div>
+    <div class="content">
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+    </div>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            var image = document.querySelector('.sticky-image');
+            var scrollPosition = window.scrollY;
+            var windowHeight = window.innerHeight;
+            var maxScroll = windowHeight * 2; // Valoare ajustabilă pentru cât de mult trebuie să se deruleze înainte de a dispare
+            var scrollThreshold = windowHeight / 2; // Pragul după care opacitatea începe să scadă
+            var opacity = 1;
+
+            if (scrollPosition > scrollThreshold) {
+                opacity = 1 - ((scrollPosition - scrollThreshold) / (maxScroll - scrollThreshold));
+            }
+
+            var translateY = Math.min(scrollPosition / 30, 100); // Ajustați viteza de deplasare aici
+            
+            image.style.opacity = opacity;
+            image.style.transform = 'translateY(-' + translateY + '%)';
+        });
+    </script>
+</body>
+</html>
